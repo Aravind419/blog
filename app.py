@@ -4,6 +4,7 @@ No database; all data in posts.json.
 """
 import json
 import os
+import threading
 import secrets
 from datetime import datetime
 from pathlib import Path
@@ -291,4 +292,13 @@ def not_found(e):
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
     ensure_posts_file()
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    # Reloader uses signal.signal(), which only works in the main thread (fails on
+    # Streamlit Cloud / some hosted environments). Disable reloader when not main.
+    use_reloader = threading.current_thread() is threading.main_thread()
+    app.run(
+        debug=True,
+        host="0.0.0.0",
+        port=5000,
+        use_reloader=use_reloader,
+    )
+
