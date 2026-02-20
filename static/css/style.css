@@ -1,0 +1,46 @@
+/* Simple Blog - Custom styles */
+:root {
+    --blog-primary: #0d6efd;
+    --blog-body-bg: #f8f9fa;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--blog-body-bg);
+}
+
+main {
+    flex: 1;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.card {
+    border: none;
+    border-radius: 0.5rem;
+}
+
+.card-title a:hover {
+    text-decoration: underline !important;
+}
+
+.post-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+footer {
+    margin-top: auto;
+}
+
+.input-group .form-control:focus {
+    z-index: 1;
+}
+
+.btn-group-actions .btn {
+    margin-right: 0.25rem;
+}

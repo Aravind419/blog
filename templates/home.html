@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Home — Simple Blog{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Blog Posts</h1>
+
+<form class="mb-4" method="get" action="{{ url_for('home') }}">
+    <div class="input-group">
+        <input type="search" name="q" class="form-control" placeholder="Search by title..." value="{{ search_query or '' }}" aria-label="Search">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+    </div>
+</form>
+
+{% if search_query %}
+<p class="text-muted">Results for "{{ search_query }}"</p>
+{% endif %}
+
+{% if not posts %}
+<p class="text-muted">No posts found.</p>
+{% else %}
+<div class="row g-4">
+    {% for post in posts %}
+    <div class="col-12">
+        <article class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title h5">
+                    <a href="{{ url_for('view_post', post_id=post.id) }}" class="text-decoration-none">{{ post.title }}</a>
+                </h2>
+                <p class="card-text text-muted small">{{ post.created_at }}</p>
+                <p class="card-text">{{ (post.content or '')[:150] }}{% if (post.content or '')|length > 150 %}…{% endif %}</p>
+                <a href="{{ url_for('view_post', post_id=post.id) }}" class="btn btn-sm btn-outline-primary">Read more</a>
+            </div>
+        </article>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
